@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-var handler = function(res, next){
-  return function(err, beer) {
+var handler = function (res, next) {
+  return function (err, beer) {
     if (err) {
       return next(err);
     }
@@ -23,45 +23,63 @@ var handler = function(res, next){
   }
 }
 
-app.post('/beers/:id/ratings', function(req, res, next) {
-  console.log(req.body)
-  console.log(req.params.id)
-    var updateObject = {$push: { ratings: req.body.rating }}; 
-    console.log(updateObject)
-  /*
-    Beer.findByIdAndUpdate(req.params.id, updateObject, { new: true }, function(err, beer) {
-        if (err) {
-            return next(err);
-        } else {
-            res.send(beer);
-        }
-    });
-    */
-});
+app.post('/beers/:id/ratings', function (req, res, next) {
+  var updateObject = {
+    $push: {
+      ratings: req.body.rating
+    }
+  };
 
-
-app.get('/beers', function(req, res, next) {
-  Beer.find(handler(res, next));
-});
-
-app.post('/beers', function(req, res, next) {
-  Beer.create(req.body, handler(res, next));
-});
-
-app.delete('/beers/:beerId', function(req, res, next) {
-  Beer.findByIdAndRemove(req.params.beerId, handler(res, next));
-});
-
-app.put('/beers/:id', function(req, res, next) {
-  Beer.findByIdAndUpdate(req.params.id, req.body, function(err, beer) {
+  Beer.findByIdAndUpdate(req.params.id, updateObject, {
+    new: true
+  }, function (err, beer) {
     if (err) {
       return next(err);
     } else {
       res.send(beer);
     }
-  }, {new: true});
+  });
 });
 
+
+app.get('/beers', function (req, res, next) {
+  Beer.find(function (err, beer) {
+    if (err) {
+      return next(err);
+    }
+    for (var x = 0; x < beer.length; x++) {
+//      if(beer[x].ratings == undefined){
+//        break 
+//      }
+      var total = 0;
+      var length = beer[x].ratings.length
+      for (var i = 0; i < length ; i++) {
+        total = total + beer[x].ratings[i]
+      }
+      var calcAvg = total / length;
+      var avg = calcAvg.toFixed(2);
+      beer[x].avg = avg
+    }
+    res.send(beer)
+  })
+});
+
+app.post('/beers', function (req, res, next) {
+  Beer.create(req.body, handler(res, next));
+});
+
+app.delete('/beers/:beerId', function (req, res, next) {
+  Beer.findByIdAndRemove(req.params.beerId, handler(res, next));
+});
+
+app.put('/beers/:id', function(req, res, next) {
+  Beer.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(error, beer) {
+    if (error) {
+      return next(error);
+    }
+    res.send(beer);
+  });
+});
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
@@ -77,9 +95,6 @@ app.use(function (err, req, res, next) {
     error: err
   });
 });
-
-
-
 
 app.listen(8000, function () {
   console.log("yo yo yo, on 8000!!")

@@ -14,7 +14,10 @@ var beerSchema = new mongoose.Schema({
     abv: {
         type: Number,
     },
-    ratings: [Number]
+    ratings: [Number],
+    avg: {
+        type: Number
+    }
 });
 
 

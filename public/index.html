@@ -10,22 +10,32 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h1 class="text-center">BeerList</h1>
+
+                <button type="button" class="btn btn-large btn-block btn-primary" ng-click="sortBy()">Sort</button>
+                <button type="button" class="btn btn-warning btn-large btn-block" ng-click="modeChange()">Edit</button>
                 <div class="page-header">
                 </div>
-                <div class=" col-xs-3 col-sm-3 col-md-3 col-lg-3 beer" ng-repeat="beer in beers" >
-                    <h4>{{beer.name}},<small> {{beer.ratings}}</small></h4>
-                     <h4>{{beer.style}},<small> {{beer.abv}}%</small></h4>   
-                     <img ng-src={{beer.image_url}}>
-                     <button type="button" class="btn btn-warning"ng-click='removeBeer()'>Remove</button>
-                     <form ng-submit="rateBeer()" >
-                       <input type="number" ng-model="userRating" min="1" max="5">
-                       <button type="submit" class="btn btn-default" >Rating</button>
-                         </form>
-
+                <div class=" col-xs-3 col-sm-3 col-md-3 col-lg-3 beer" ng-repeat="beer in beers | orderBy: SortVar :sortDir ">
+                    <div ng-show="list.show">
+                        <h4>{{beer.name}},<small> {{beer.avg}}</small></h4>
+                        <h4>{{beer.style}},<small> {{beer.abv}}%</small></h4>
+                        <img ng-src={{beer.image_url}}>
+                        <button type="button" class="btn btn-warning" ng-click='removeBeer()'>Remove</button>
+                    </div>
+                    <form ng-show="list.edit" ng-submit="updatedBeer()">
+                        <input type="text" class="form-control"  placeholder="Beer's name" ng-model="newName">
+                        <input type="text" class="form-control"  placeholder="Beer's style" ng-model="newStyle">
+                        <input type="number" class="form-control"  placeholder="Beer's abv" ng-model="newAbv">
+                        <input type="text" class="form-control"  placeholder="Beer's image" ng-model="newImage">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <form ng-submit="rateBeer()">
+                        <input type="number" ng-model="userRating" min="1" max="5">
+                        <button type="submit" class="btn btn-default">Rating</button>
+                    </form>
                 </div>
-                
+
                 <form ng-submit="addBeer()">
-                    <h3>Add a new beer</h3>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Beer Name" ng-model="name"></input>
                     </div>
