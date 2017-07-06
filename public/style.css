@@ -1,0 +1,19 @@
+img {
+    height: 80px;
+    width: 80px;
+}
+
+
+
+.beer {
+    width: 170px;
+    height: 220px;
+    text-align: left;
+    image-orientation: left;
+    float: left;
+    margin: 1%;
+    max-height: 60%;
+    border:1px;
+    border-color: lightgoldenrodyellow;
+    border-style: double
+}
