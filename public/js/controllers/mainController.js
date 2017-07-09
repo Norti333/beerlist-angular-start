@@ -1,17 +1,11 @@
 app.controller('mainCont', function ($scope, beerFactory) {
-    $scope.modeChange = function(){
-        if ($scope.list.show == true){
-            $scope.list.edit = true
-            $scope.list.show = false
+    $scope.modeChange = function () {
+        if(this.Editor == true){
+            this.Editor = null
         } else {
-            $scope.list.edit = false
-            $scope.list.show = true
-        }
-    }
-    $scope.list = {
-        show: true,
-        edit: false
-    }
+            this.Editor = true
+        }}
+
     $scope.beers = []
     $scope.rateBeer = function () {
         rating = {
@@ -23,7 +17,10 @@ app.controller('mainCont', function ($scope, beerFactory) {
                     $scope.beers[i].ratings = updatedBeer.ratings
                     var avg = beerFactory.calcRatings($scope.beers[i].ratings)
                     return $scope.beers[i].avg = avg
-                }}})}
+                }
+            }
+        })
+    }
     $scope.addBeer = function () {
         var newBeer = {
             name: this.name,
@@ -73,22 +70,22 @@ app.controller('mainCont', function ($scope, beerFactory) {
     }
 
 
-$scope.updatedBeer = function(){
-    
-    var updatedBeer = {
-        _id:this.beer._id,
-        name: this.newName,
-        style: this.newStyle,
-        abv: this.newAbv,
-        image_url: this.newImage
-    } 
-    beerFactory.updateBeer(updatedBeer).then(function(beer){
-         for (var i = 0; i < $scope.beers.length; i++) {
-                    if ($scope.beers[i]._id === beer._id) {
-                        $scope.beers[i] = beer;
-                        break;
-                    }
+    $scope.updatedBeer = function () {
+
+        var updatedBeer = {
+            _id: this.beer._id,
+            name: this.newName,
+            style: this.newStyle,
+            abv: this.newAbv,
+            image_url: this.newImage
+        }
+        beerFactory.updateBeer(updatedBeer).then(function (beer) {
+            for (var i = 0; i < $scope.beers.length; i++) {
+                if ($scope.beers[i]._id === beer._id) {
+                    $scope.beers[i] = beer;
+                    break;
                 }
-    })
-}
+            }
+        })
+    }
 });
