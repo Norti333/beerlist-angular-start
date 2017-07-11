@@ -6,7 +6,24 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body ng-app="beerList">
+<body ng-app="beerList" ng-controller="masterController">
+
+    <nav class="navbar navbar-default " role="navigation">
+        <a class="navbar-brand">BeerList</a>
+        <ul class="nav navbar-nav">
+            <li class="active">
+               <a ui-sref="home" >Home</a>
+            </li>
+            <li>
+               <a ui-sref="login" > log In</a>
+            </li>
+            <li>
+                <a ui-sref="register" >register</a>
+            </li>
+        </ul>
+        <p>Hello user: {{currentUser.username}}</p>
+    </nav>
+
 
     <div ui-view>
     </div>
@@ -20,6 +37,7 @@
     <script src="js/controllers/mainController.js"></script>
     <script src="js/controllers/beerController.js"></script>
     <script src="js/controllers/authCtrl.js"></script>
+    <script src="js/controllers/masterController.js"></script>
 
 
 </body>

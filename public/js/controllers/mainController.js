@@ -36,13 +36,13 @@ app.controller('mainCont', function ($scope, beerFactory) {
                 console.log(error)
             });
     }
-    $scope.SortVal = 'avg'
+    $scope.sortDir = 'avg'
 
     $scope.sortBy = function () {
-        if ($scope.sortDir == true) {
-            $scope.sortDir = false
+        if ($scope.sortDir == 'avg') {
+            $scope.sortDir = '-avg'
         } else {
-            $scope.sortDir = true
+            $scope.sortDir = 'avg'
         }
     }
 

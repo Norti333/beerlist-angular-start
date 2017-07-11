@@ -1,13 +1,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <h1 class="text-center">BeerList</h1>
+
             <button type="button" class="btn btn-large btn-block btn-primary" ng-click="sortBy()">Sort</button>
-            <a ui-sref="register"><button type="button" class="btn btn-success btn-block">register</button>
-                        
             <div class="page-header">
             </div>
-            <div class=" col-xs-5 col-sm-5 col-md-5 col-lg-5 beer" ng-repeat="beer in beers| orderBy: SortVar :sortDir">
+            <div class=" col-xs-5 col-sm-5 col-md-5 col-lg-5 beer" ng-repeat="beer in beers| orderBy: sortDir">
                 <div ng-hide="Editor">
                     <h4>{{beer.name}},<small> {{beer.avg}}</small></h4>
                     <h4>{{beer.style}},<small> {{beer.abv}}%</small></h4>
