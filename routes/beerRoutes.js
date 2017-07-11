@@ -2,6 +2,15 @@ var express = require('express');
 var router = express.Router();
 var Beer = require("../models/BeerModel");
 
+var handler = function (res, next) {
+  return function (err, beer) {
+    if (err) {
+      return next(err);
+    }
+    res.send(beer);
+  }
+}
+
 router.post('/:id/ratings', function (req, res, next) {
   var updateObject = {
     $push: {

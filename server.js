@@ -5,7 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
 var beerRoutes = require('./routes/beerRoutes');
-var User = require("./models/userModel");
+var userRoutes = require('./routes/userRoutes');
 mongoose.connect('mongodb://localhost/beers');
 var app = express();
 
@@ -24,9 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
 
 var handler = function (res, next) {
   return function (err, beer) {
@@ -36,12 +34,17 @@ var handler = function (res, next) {
     res.send(beer);
   }
 }
+
+
 app.use('/beers', beerRoutes);
+app.use('/users', userRoutes);
+
 app.all('*', function (req, res) {
   res.sendFile(__dirname + "/public/index.html")
 })
+
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('Not Found'); 
   err.status = 404;
   next(err);
 });
@@ -54,6 +57,6 @@ app.use(function (err, req, res, next) {
     error: err
   });
 });
-app.listen(8888, function () {
-  console.log("yo yo yo, on 8888!!")
+app.listen(8000, function () {
+  console.log("yo yo yo, on 8000!!")
 });

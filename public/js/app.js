@@ -12,6 +12,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', functio
             url: '/beer/:id',
             controller: 'beerController',
             templateUrl: '/templates/beer.html',
-        });
+        })
+        .state('register', {
+            url: '/register',
+            templateUrl: '/templates/register.html',
+            controller: 'AuthCtrl'
+        })
     $urlRouterProvider.otherwise('/home');
 }]);
