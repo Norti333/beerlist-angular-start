@@ -5,7 +5,7 @@ app.controller('mainCont', function ($scope, beerFactory) {
         } else {
             this.Editor = true
         }}
-
+        
     $scope.beers = []
     $scope.rateBeer = function () {
         rating = {

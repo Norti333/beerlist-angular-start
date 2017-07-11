@@ -48,12 +48,9 @@ app.get('/beers', function (req, res, next) {
       return next(err);
     }
     for (var x = 0; x < beer.length; x++) {
-//      if(beer[x].ratings == undefined){
-//        break 
-//      }
       var total = 0;
       var length = beer[x].ratings.length
-      for (var i = 0; i < length ; i++) {
+      for (var i = 0; i < length; i++) {
         total = total + beer[x].ratings[i]
       }
       var calcAvg = total / length;
@@ -72,14 +69,65 @@ app.delete('/beers/:beerId', function (req, res, next) {
   Beer.findByIdAndRemove(req.params.beerId, handler(res, next));
 });
 
-app.put('/beers/:id', function(req, res, next) {
-  Beer.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(error, beer) {
+app.put('/beers/:id', function (req, res, next) {
+  Beer.findByIdAndUpdate(req.params.id, req.body, {
+    new: true
+  }, function (error, beer) {
     if (error) {
       return next(error);
     }
     res.send(beer);
   });
 });
+
+
+app.post('/beers/:id/reviews', function (req, res, next) {
+  var update = {
+    $push: {
+      reviews: req.body
+    }
+  };
+
+  Beer.findByIdAndUpdate(req.params.id, update, {
+    new: true
+  }, function (err, beer) {
+    if (err) {
+      return next(err);
+    }
+    res.send(beer)
+  });
+});
+
+app.delete('/beers/:beerid/reviews/:reviewid', function (req, res, next) {
+  var update = {
+    $pull: {
+      reviews: {
+        _id: req.params.reviewid
+      }
+    }
+  };
+  Beer.findByIdAndUpdate(req.params.beerid, update, {
+    new: true
+  }, function (err, beer) {
+    if (err) {
+      return next(err);
+    }
+    res.send(beer)
+  });
+});
+
+app.get('/beers/:id', function (req, res, next) {
+  Beer.findById(req.params.id, function (err, beer) {
+    if (err) {
+      return next(err);
+    }
+    res.send(beer)
+  })
+});
+
+app.all('*', function (req, res) {
+  res.sendFile(__dirname + "/public/index.html")
+})
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
@@ -96,10 +144,6 @@ app.use(function (err, req, res, next) {
   });
 });
 
-app.listen(8000, function () {
-  console.log("yo yo yo, on 8000!!")
+app.listen(8888, function () {
+  console.log("yo yo yo, on 8888!!")
 });
-
-app.all('*', function(req, res) {
-  res.sendFile(__dirname + "")
-})

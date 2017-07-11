@@ -1,12 +1,17 @@
-var app = angular.module('beerList', []);
+var app = angular.module('beerList', ["ui.router"]);
 
-app.config(function($stateProvider, $urlRouterProvider) {
-$locationProvider.html5Mode(true);
-$stateProvider.state('name', {
-    url:'',
-    templateUrl: ''
-})
-
-$urlRouterProvider.otherwise('');
-
-})
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
+    $stateProvider
+        .state('home', {
+            url: '/home',
+            controller: 'mainCont',
+            templateUrl: '/templates/home.html'
+        })
+        .state('beer', {
+            url: '/beer/:id',
+            controller: 'beerController',
+            templateUrl: '/templates/beer.html',
+        });
+    $urlRouterProvider.otherwise('/home');
+}]);

@@ -9,6 +9,22 @@ app.factory('beerFactory', function ($http) {
         var avg = calcAvg.toFixed(2);
         return avg;
     }
+beerFactory.deleteReview = function(beerId, reviewId){
+        return $http.delete('/beers/' + beerId + '/reviews/' +reviewId).then(function (response) {
+            return angular.copy(response.data);
+        });
+}
+
+    beerFactory.newReview = function (beerId, review) {
+        return $http.post('/beers/' + beerId + '/reviews', review).then(function (response) {
+            return angular.copy(response.data);
+        });
+    }
+    beerFactory.getBeerReview = function (id) {
+        return $http.get('/beers/' + id).then(function (response) {
+            return angular.copy(response.data)
+        })
+    }
     beerFactory.getBeers = function () {
         return $http.get('/beers')
             .then(function (response) {

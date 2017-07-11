@@ -6,8 +6,7 @@ img {
 
 
 .beer {
-    width: 170px;
-    height: 220px;
+
     text-align: left;
     image-orientation: left;
     float: left;
@@ -16,4 +15,8 @@ img {
     border:1px;
     border-color: lightgoldenrodyellow;
     border-style: double
+}
+
+img{
+    display: block;
 }
