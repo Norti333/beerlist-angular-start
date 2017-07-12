@@ -43,6 +43,15 @@ router.post('/login', passport.authenticate('local'), function (req, res) {
   res.send(req.user.username)
 });
 
+
+router.get('/currentuser',function (req, res){
+ if (req.user) {
+    res.send(req.user.username)
+  } else {
+    res.send(null)
+  }
+});
+
 router.get('/logout', function (req, res) {
   req.logout();
   res.send('Logged Out');

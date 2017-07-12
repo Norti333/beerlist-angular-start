@@ -11,7 +11,7 @@
                     <h4>{{beer.style}},<small> {{beer.abv}}%</small></h4>
                     <img ng-src={{beer.image_url}}>
                     <a ui-sref="beer({id: beer._id})">Reviews</a>
-                    <form ng-submit="rateBeer()">
+                    <form ng-submit="rateBeer()" ng-show="currentUser.username">
                         <button type="button" class="btn btn-default btn-primary " ng-click="modeChange()">edit</button>
                         <button type="button" class="btn btn-warning" ng-click='removeBeer()'>Remove</button>
                         <input type="number" ng-model="userRating" min="1" max="5">
@@ -26,7 +26,7 @@
                     <button type="submit" class="btn btn-primary" ng-click=''>Submit</button>
                 </form>
             </div>
-            <form ng-submit="addBeer()">
+            <form ng-submit="addBeer()" ng-show="currentUser.username">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Beer Name" ng-model="name"></input>
                 </div>

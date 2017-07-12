@@ -36,6 +36,7 @@ var handler = function (res, next) {
 }
 
 
+
 app.use('/beers', beerRoutes);
 app.use('/users', userRoutes);
 

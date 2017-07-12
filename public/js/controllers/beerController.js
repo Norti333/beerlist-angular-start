@@ -1,4 +1,4 @@
-app.controller('beerController', function ($scope, $stateParams, beerFactory) {
+app.controller('beerController', function ($scope, $stateParams, beerFactory, authFactory) {
    beerFactory.getBeerReview($stateParams.id).then(function (beer) {
             $scope.beer = beer;
         })
@@ -6,7 +6,7 @@ app.controller('beerController', function ($scope, $stateParams, beerFactory) {
             console.log(error)
         });
     $scope.beer = ''
-
+    $scope.reviewName = authFactory.currentUser.username
     $scope.addReview = function(){
          var review = {name:$scope.reviewName, text: $scope.reviewText}
         beerFactory.newReview($scope.beer._id , review).then(function (beer) {

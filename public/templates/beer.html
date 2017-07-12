@@ -1,16 +1,16 @@
-<div class="page-header">
-  <a ui-sref="home">Home</a>
+<div class="page-header"> 
 
   <h4>{{beer.name}},<small> {{beer.avg}}</small></h4>
   <h4>{{beer.style}},<small> {{beer.abv}}%</small></h4>
   <img ng-src={{beer.image_url}}>
   <h2>reviews: </h2>
-  <div ng-repeat="review in beer.reviews">{{review.name}} : {{review.text}} 
+  <div ng-repeat="review in beer.reviews">{{review.name}} : {{review.text}}
     <button type="button" class="btn btn-danger" ng-click='deleteReview()'>Remove</button>
-    </div>
-  <h4> Add review: </h4>
-  <form ng-submit="addReview()">
-    <input type="text" class="form-control" placeholder="Name" ng-model="reviewName">
+  </div>
+  <h4> Add review:  </h4>
+
+  <form ng-submit="addReview()" ng-show="currentUser.username">
+    <input type="text" class="form-control"  placeholder="Name" ng-model="reviewName">
     <input type="text" class="form-control" placeholder="review" ng-model="reviewText">
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

@@ -11,6 +11,15 @@ var handler = function (res, next) {
   }
 }
 
+var ensureAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    return res.status('401').send({message: "Unauthorized" });
+  }
+};
+
+
 router.post('/:id/ratings', function (req, res, next) {
   var updateObject = {
     $push: {
